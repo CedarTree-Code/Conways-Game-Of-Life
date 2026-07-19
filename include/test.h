@@ -7,3 +7,4 @@
 #include <cuda_gl_interop.h>
 
 void test();
+__global__ void test2();
