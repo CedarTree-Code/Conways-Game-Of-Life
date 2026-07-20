@@ -20,7 +20,9 @@ target_include_directories(glad_lib PUBLIC
 
 add_executable(main
     src/main.cpp
-    src/test.cu
+    src/lifekernel.cu
+    src/graphics.cpp
+    src/lifeforms.cpp
 )
 
 find_package(OpenGL REQUIRED)
