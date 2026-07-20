@@ -16,12 +16,12 @@ int main() {
     glfwInit();
 
     GLFWwindow* window;
-    setupGLWindow(window, "Pixel Grid");
+    setupGLWindow(window, "Game Of Life");
     setupGLpbo();
     setupGLTexture();
 
     unsigned char* h_grid = new unsigned char[sim_w*sim_h];
-    randomLife(h_grid, 0.2);
+    randomLife(h_grid, 0.1);
     initLife(h_grid);
     delete[] h_grid;
 

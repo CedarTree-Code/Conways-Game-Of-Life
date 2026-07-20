@@ -17,7 +17,7 @@ __global__ void gameOfLife(unsigned char* d_c, unsigned char* d_n, uchar4* d_pb)
         for(int dy = -1; dy < 2; dy++) {
             if(dx==0 && dy==0) 
                 continue;
-            else if(d_c[(y+dy)*sim_w + (x+dx)]==1) 
+            else if(d_c[ ((y+dy+sim_h)%sim_h) * sim_w + (x+dx+sim_w)%sim_w ]==1) //proper wrapping (negative modulo fix)
                 n++;
         }
     }
@@ -27,10 +27,10 @@ __global__ void gameOfLife(unsigned char* d_c, unsigned char* d_n, uchar4* d_pb)
     bool alive = (d_c[i] == 0 && BORN) || (d_c[i] == 1 && SURVIVE);
     
     if(alive){
-        d_pb[i] = make_uchar4(255, 255, 255, 255);
+        d_pb[i] = make_uchar4(ALIVE_COLOR, 255);
         d_n[i] = 1; 
     }else{ 
-        d_pb[i] = make_uchar4(0, 0, 0, 255); 
+        d_pb[i] = make_uchar4(DEAD_COLOR, 255); 
         d_n[i] = 0; 
     }
 }
