@@ -17,7 +17,7 @@ void setupGLTexture() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); //Sharp pixels
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); 
     
-    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D); //Enables the Legacy OpenGL Commands
 }
 
 void clearGLTexture() {
@@ -27,7 +27,7 @@ void clearGLTexture() {
     }
 }
 
-void drawTexture(GLuint pbo) {
+void drawTexture(GLuint& pbo) {
     glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbo);
     glBindTexture(GL_TEXTURE_2D, tex);
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, sim_w, sim_h, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
@@ -36,7 +36,7 @@ void drawTexture(GLuint pbo) {
     glClear(GL_COLOR_BUFFER_BIT);
     glViewport(0, 0, window_w, window_h);
 
-    //Legacy OpenGL commands
+    //Legacy OpenGL commands for Integrated Textures
     glBegin(GL_QUADS);
         glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0f, -1.0f);
         glTexCoord2f(1.0f, 0.0f); glVertex2f(1.0f, -1.0f);

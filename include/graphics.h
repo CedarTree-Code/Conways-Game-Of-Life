@@ -10,4 +10,4 @@
 void setupGLWindow(GLFWwindow*& out, const char* Title);
 void setupGLTexture();
 void clearGLTexture();
-void drawTexture(GLuint pbo);
+void drawTexture(GLuint& pbo);

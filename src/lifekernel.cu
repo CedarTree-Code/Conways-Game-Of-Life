@@ -80,12 +80,13 @@ void setupGLpbo() {
     glBufferData(GL_PIXEL_UNPACK_BUFFER, sim_w * sim_h * sizeof(uchar4), NULL, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 
-    cudaError_t regErr = cudaGraphicsGLRegisterBuffer(&cuda_pbo_resource, pbo, cudaGraphicsRegisterFlagsWriteDiscard);
-    if (regErr != cudaSuccess) {
-        printf("PBO Registration Failed: %s\n", cudaGetErrorString(regErr));
-    } else {
-        printf("PBO Registered Successfully with CUDA!\n");
-    }
+    cudaGraphicsGLRegisterBuffer(&cuda_pbo_resource, pbo, cudaGraphicsRegisterFlagsWriteDiscard);
+    // cudaError_t regErr = cudaGraphicsGLRegisterBuffer(&cuda_pbo_resource, pbo, cudaGraphicsRegisterFlagsWriteDiscard);
+    // if (regErr != cudaSuccess) {
+    //     printf("PBO Registration Failed: %s\n", cudaGetErrorString(regErr));
+    // } else {
+    //     printf("PBO Registered Successfully with CUDA!\n");
+    // }
 }
 
 void clearGLpbo() {
@@ -104,17 +105,19 @@ uchar4* map() {
     uchar4* d_ptr = {};
     size_t num_bytes;
 
-    cudaError_t err = cudaGraphicsMapResources(1, &cuda_pbo_resource, 0);
-    if (err != cudaSuccess) {
-        printf("CUDA Map Resources Failed: %s\n", cudaGetErrorString(err));
-        return nullptr;
-    }
+    cudaGraphicsMapResources(1, &cuda_pbo_resource, 0);
+    // cudaError_t err = cudaGraphicsMapResources(1, &cuda_pbo_resource, 0);
+    // if (err != cudaSuccess) {
+    //     printf("CUDA Map Resources Failed: %s\n", cudaGetErrorString(err));
+    //     return nullptr;
+    // }
 
-    err = cudaGraphicsResourceGetMappedPointer((void**)&d_ptr, &num_bytes, cuda_pbo_resource);
-    if (err != cudaSuccess) {
-        printf("CUDA Mapped Pointer Failed: %s\n", cudaGetErrorString(err));
-        return nullptr;
-    }
+    cudaGraphicsResourceGetMappedPointer((void**)&d_ptr, &num_bytes, cuda_pbo_resource);
+    // err = cudaGraphicsResourceGetMappedPointer((void**)&d_ptr, &num_bytes, cuda_pbo_resource);
+    // if (err != cudaSuccess) {
+    //     printf("CUDA Mapped Pointer Failed: %s\n", cudaGetErrorString(err));
+    //     return nullptr;
+    // }
     
     return d_ptr;
 }
